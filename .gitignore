@@ -3,3 +3,5 @@ back/node_modules
 front/node_modules
 
 front/.next
+
+back/.env

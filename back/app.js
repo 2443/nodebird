@@ -25,13 +25,13 @@ passportConfig();
 
 app.use(
   cors({
-    origin: '*',
-    credentials: false,
+    origin: 'http://localhost:3000',
+    credentials: true,
   })
 );
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
+app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(
   session({
     saveUninitialized: false,

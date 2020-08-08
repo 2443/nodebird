@@ -43,14 +43,10 @@ function PostCard({ post }) {
         actions={[
           <RetweetOutlined key='retweet' />,
           liked ? (
-            <HeartTwoTone
-              twoToneColor='#eb2f96'
-              key='heart'
-              onClick={onToggleLike}
-            />
+            <HeartTwoTone twoToneColor='#eb2f96' key='heart' onClick={onToggleLike} />
           ) : (
-              <HeartOutlined key='heart' onClick={onToggleLike} />
-            ),
+            <HeartOutlined key='heart' onClick={onToggleLike} />
+          ),
           <MessageOutlined key='comment' onClick={onToggleComment} />,
           <Popover
             key='more'
@@ -59,17 +55,13 @@ function PostCard({ post }) {
                 {id === post.User.id ? (
                   <>
                     <Button>수정</Button>
-                    <Button
-                      type='danger'
-                      loading={removePostLoading}
-                      onClick={onRemovePost}
-                    >
+                    <Button type='danger' loading={removePostLoading} onClick={onRemovePost}>
                       삭제
                     </Button>{' '}
                   </>
                 ) : (
-                    <Button>신고</Button>
-                  )}
+                  <Button>신고</Button>
+                )}
               </Button.Group>
             }
           >
@@ -84,30 +76,28 @@ function PostCard({ post }) {
           description={<PostCardContent postData={post.content} />}
         />
       </Card>
-      {
-        commentFormOpened && (
-          <div>
-            <CommentForm post={post} />
-            <List
-              header={`${post.Comments.length}개의 댓글`}
-              itemLayout='horizontal'
-              dataSource={post.Comments}
-              renderItem={(item) => (
-                <li>
-                  <Comment
-                    author={item.User.nickname}
-                    avatar={<Avatar>{item.User.nickname[0]}</Avatar>}
-                    content={item.content}
-                  />
-                </li>
-              )}
-            />
-          </div>
-        )
-      }
+      {commentFormOpened && (
+        <div>
+          <CommentForm post={post} />
+          <List
+            header={`${post.Comments.length}개의 댓글`}
+            itemLayout='horizontal'
+            dataSource={post.Comments}
+            renderItem={(item) => (
+              <li>
+                <Comment
+                  author={item.User.nickname}
+                  avatar={<Avatar>{item.User.nickname[0]}</Avatar>}
+                  content={item.content}
+                />
+              </li>
+            )}
+          />
+        </div>
+      )}
       {/* <CommentForm />
       <Comments /> */}
-    </div >
+    </div>
   );
 }
 
@@ -116,7 +106,7 @@ PostCard.propTypes = {
     id: PropTypes.number,
     User: PropTypes.object,
     content: PropTypes.string,
-    createdAt: PropTypes.object,
+    createdAt: PropTypes.string,
     Comments: PropTypes.arrayOf(PropTypes.object),
     Images: PropTypes.arrayOf(PropTypes.object),
   }).isRequired,

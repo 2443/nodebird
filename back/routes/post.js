@@ -20,9 +20,15 @@ router.post('/', isLoggedIn, async (req, res, next) => {
         },
         {
           model: Comment,
+          include: {
+            model: User,
+            attributes: ['id', 'nickname'],
+            order: [['createdAt', 'DESC']],
+          },
         },
         {
           model: User,
+          attributes: ['id', 'nickname'],
         },
       ],
     });
@@ -35,20 +41,29 @@ router.post('/', isLoggedIn, async (req, res, next) => {
 
 router.post('/:postId/comment', isLoggedIn, async (req, res, next) => {
   try {
-    const Post = await Post.findOne({
+    const post = await Post.findOne({
       where: {
         id: req.params.postId,
       },
     });
-    if (!Post) {
+    if (!post) {
       return res.status(403).send('존재하지 않는 게시글입니다.');
     }
     const comment = await Comment.create({
       content: req.body.content,
-      PostId: req.params.postId,
+      PostId: parseInt(req.params.postId, 10),
       UserId: req.user.id,
     });
-    res.status(201).json(comment);
+    const fullCmment = await Comment.findOne({
+      where: { id: comment.id },
+      include: [
+        {
+          model: User,
+          attributes: ['id', 'nickname'],
+        },
+      ],
+    });
+    res.status(201).json(fullCmment);
   } catch (error) {
     console.error(error);
     next(error);

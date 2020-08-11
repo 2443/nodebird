@@ -47,7 +47,7 @@ function* changeNickname(action) {
   } catch (err) {
     yield put({
       type: CHANGE_NICKNAME_FAILURE,
-      data: err.response.data,
+      error: err.response.data,
     });
   }
 }
@@ -66,7 +66,7 @@ function* loadMyInfo() {
   } catch (err) {
     yield put({
       type: LOAD_MY_INFO_FAILURE,
-      data: err.response.data,
+      error: err.response.data,
     });
   }
 }
@@ -85,7 +85,7 @@ function* logIn(action) {
   } catch (err) {
     yield put({
       type: LOG_IN_FAILURE,
-      data: err.response.data,
+      error: err.response.data,
     });
   }
 }
@@ -103,7 +103,7 @@ function* logOut() {
   } catch (err) {
     yield put({
       type: LOG_OUT_FAILURE,
-      data: err.response.data,
+      error: err.response.data,
     });
   }
 }
@@ -122,7 +122,7 @@ function* follow(action) {
   } catch (err) {
     yield put({
       type: FOLLOW_FAILURE,
-      data: err.response.data,
+      error: err.response.data,
     });
   }
 }
@@ -141,7 +141,7 @@ function* unfollow(action) {
   } catch (err) {
     yield put({
       type: UNFOLLOW_FAILURE,
-      data: err.response.data,
+      error: err.response.data,
     });
   }
 }
@@ -160,7 +160,7 @@ function* signUp(action) {
   } catch (err) {
     yield put({
       type: SIGN_UP_FAILURE,
-      data: err.response.data,
+      error: err.response.data,
     });
   }
 }
@@ -179,7 +179,7 @@ function* loadFollowers(action) {
   } catch (err) {
     yield put({
       type: LOAD_FOLLOWERS_FAILURE,
-      data: err.response.data,
+      error: err.response.data,
     });
   }
 }
@@ -198,7 +198,7 @@ function* loadFollowings(action) {
   } catch (err) {
     yield put({
       type: LOAD_FOLLOWINGS_FAILURE,
-      data: err.response.data,
+      error: err.response.data,
     });
   }
 }
@@ -217,7 +217,7 @@ function* removeFollower(action) {
   } catch (err) {
     yield put({
       type: REMOVE_FOLLOWER_FAILURE,
-      data: err.response.data,
+      error: err.response.data,
     });
   }
 }

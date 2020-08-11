@@ -9,9 +9,15 @@ import { LOAD_MY_INFO_REQUEST } from '../reducers/user';
 const Home = () => {
   const dispatch = useDispatch();
   const { me } = useSelector((state) => state.user);
-  const { mainPosts, hasMorePosts, loadPostsLoading } = useSelector(
+  const { mainPosts, hasMorePosts, loadPostsLoading, retweetError } = useSelector(
     (state) => state.post
   );
+
+  useEffect(() => {
+    if (retweetError) {
+      alert('자신의 글은 리트윗할 수 없습니다.');
+    }
+  }, [retweetError]);
 
   useEffect(() => {
     dispatch({
@@ -29,8 +35,10 @@ const Home = () => {
         document.documentElement.scrollHeight - 300
       ) {
         if (hasMorePosts && !loadPostsLoading) {
+          const lastId = mainPosts[mainPosts.length - 1]?.id;
           dispatch({
             type: LOAD_POSTS_REQUEST,
+            lastId,
           });
         }
       }

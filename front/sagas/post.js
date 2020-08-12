@@ -29,6 +29,11 @@ import {
   LOAD_POST_REQUEST,
   LOAD_POST_SUCCESS,
   LOAD_POST_FAILURE,
+  LOAD_HASHTAG_POSTS_REQUEST,
+  LOAD_USER_POSTS_REQUEST,
+  LOAD_USER_POSTS_SUCCESS,
+  LOAD_HASHTAG_POSTS_SUCCESS,
+  LOAD_USER_POSTS_FAILURE,
 } from '../reducers/post';
 import { ADD_POST_TO_ME, REMOVE_POST_OF_ME } from '../reducers/user';
 
@@ -216,6 +221,46 @@ function* loadPost(action) {
   }
 }
 
+function loadUserPostAPI(data, lastId) {
+  return Axios.get(`/user/${data}/posts?lastId=${lastId || 0}`);
+}
+
+function* loadUserPost(action) {
+  try {
+    const result = yield call(loadUserPostAPI, action.data, action.lastId);
+    yield put({
+      type: LOAD_USER_POSTS_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: LOAD_USER_POSTS_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+function loadHashtagPostAPI(data, lastId) {
+  return Axios.get(`/hashtag/${encodeURIComponent(data)}?lastId=${lastId || 0}`);
+}
+
+function* loadHashtagPost(action) {
+  try {
+    const result = yield call(loadHashtagPostAPI, action.data, action.lastId);
+    yield put({
+      type: LOAD_HASHTAG_POSTS_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: LOAD_HASHTAG_POSTS_SUCCESS,
+      error: err.response.data,
+    });
+  }
+}
+
 function* watchLoadPosts() {
   yield takeLatest(LOAD_POSTS_REQUEST, loadPosts);
 }
@@ -251,6 +296,14 @@ function* watchLoadPost() {
   yield takeLatest(LOAD_POST_REQUEST, loadPost);
 }
 
+function* watctLoadUserPost() {
+  yield takeLatest(LOAD_USER_POSTS_REQUEST, loadUserPost);
+}
+
+function* watctLoadHashtagPost() {
+  yield takeLatest(LOAD_HASHTAG_POSTS_REQUEST, loadHashtagPost);
+}
+
 export default function* postSaga() {
   yield all([
     fork(watchLoadPosts),
@@ -262,5 +315,7 @@ export default function* postSaga() {
     fork(watchUploadImages),
     fork(watchRetweet),
     fork(watchLoadPost),
+    fork(watctLoadUserPost),
+    fork(watctLoadHashtagPost),
   ]);
 }

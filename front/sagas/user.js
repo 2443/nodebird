@@ -1,4 +1,4 @@
-import { all, fork, put, call, takeLatest, delay } from 'redux-saga/effects';
+import { all, fork, put, call, takeLatest } from 'redux-saga/effects';
 import Axios from 'axios';
 import {
   LOG_IN_FAILURE,

@@ -2,7 +2,7 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
 
-const { User, Post } = require('../models');
+const { User, Post, Image, Comment } = require('../models');
 const { isLoggedIn, isNotLoggedIn } = require('./middleware');
 const db = require('../models');
 
@@ -54,11 +54,12 @@ router.get('/:userId', async (req, res, next) => {
     ],
   });
   if (fullUserWithoutPassword) {
-    const data = fullUserWithoutPassword.toJson();
+    const data = fullUserWithoutPassword.toJSON();
     data.Posts = data.Posts.length;
     data.Followers = data.Followers.length;
     data.Followings = data.Followings.length;
-    return res.status(200).json(fullUserWithoutPassword);
+    console.log(data);
+    return res.status(200).json(data);
   } else {
     return res.status(403).send('존재하지 않는 사용자입니다.');
   }
@@ -218,6 +219,60 @@ router.get('/followings', isLoggedIn, async (req, res, next) => {
     });
     const followings = await user.getFollowings();
     res.status(200).json(followings);
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
+router.get('/:userId/posts', async (req, res, next) => {
+  try {
+    const where = {
+      UserId: req.params.userId,
+    };
+    if (parseInt(req.query.lastId, 10)) {
+      where.id = { [Op.lt]: parseInt(req.query.lastId, 10) };
+    }
+    const posts = await Post.findAll({
+      where,
+      limit: 10,
+      order: [['createdAt', 'DESC']],
+      include: [
+        {
+          model: User,
+        },
+        {
+          model: Image,
+        },
+        {
+          model: Comment,
+          include: {
+            model: User,
+            attributes: ['id', 'nickname'],
+            order: [['createdAt', 'DESC']],
+          },
+        },
+        {
+          model: User,
+          as: 'Likers',
+          attributes: ['id'],
+        },
+        {
+          model: Post,
+          as: 'Retweet',
+          include: [
+            {
+              model: User,
+              attributes: ['id', 'nickname'],
+            },
+            {
+              model: Image,
+            },
+          ],
+        },
+      ],
+    });
+    res.status(200).json(posts);
   } catch (error) {
     console.error(error);
     next(error);

@@ -26,6 +26,7 @@
     "react/jsx-wrap-multilines": "off",
     "jsx-quotes": "off",
     "comma-dangle": "off",
-    "no-param-reassign": "off"
+    "no-param-reassign": "off",
+    "react/react-in-jsx-scope": "off"
   }
 }

@@ -27,6 +27,7 @@
     "jsx-quotes": "off",
     "comma-dangle": "off",
     "no-param-reassign": "off",
-    "react/react-in-jsx-scope": "off"
+    "react/react-in-jsx-scope": "off",
+    "implicit-arrow-linebreak": "off"
   }
 }

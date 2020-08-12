@@ -30,7 +30,7 @@ router.get('/', async (req, res, next) => {
     });
     res.status(200).json(fullUserWithoutPassword);
   } else {
-    res.status(200).json(fullUserWithoutPassword);
+    res.status(200).json(null);
   }
 });
 

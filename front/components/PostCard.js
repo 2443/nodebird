@@ -10,6 +10,8 @@ import {
 } from '@ant-design/icons';
 import Link from 'next/link';
 import { useSelector, useDispatch } from 'react-redux';
+import moment from 'moment';
+
 import PostImages from './PostImages';
 import CommentForm from './CommentForm';
 import PostCardContent from './PostCardContent';
@@ -21,6 +23,7 @@ import {
 } from '../reducers/post';
 import FollowButton from './FollowButton';
 
+moment.locale('ko');
 function PostCard({ post }) {
   const dispatch = useDispatch();
   const id = useSelector((state) => state.user.me?.id);
@@ -107,6 +110,7 @@ function PostCard({ post }) {
       >
         {post.RetweetId && post.Retweet ? (
           <Card cover={post.Images[0] && <PostImages images={post.Images} />}>
+            <div styld={{ float: 'right' }}>{moment(post.createdAt).format('MMMM.YY.DD')}</div>
             <Card.Meta
               avatar={
                 <Link href={`/user/${post.Retweet.User.id}`}>
@@ -120,17 +124,20 @@ function PostCard({ post }) {
             />
           </Card>
         ) : (
-          <Card.Meta
-            avatar={
-              <Link href={`/user/${post.User.id}`}>
-                <a>
-                  <Avatar>{post.User.nickname[0]}</Avatar>
-                </a>
-              </Link>
-            }
-            title={post.User.nickname}
-            description={<PostCardContent postData={post.content} />}
-          />
+          <>
+            <div styld={{ float: 'right' }}>{moment(post.createdAt).format('MMMM.YY.DD')}</div>
+            <Card.Meta
+              avatar={
+                <Link href={`/user/${post.User.id}`}>
+                  <a>
+                    <Avatar>{post.User.nickname[0]}</Avatar>
+                  </a>
+                </Link>
+              }
+              title={post.User.nickname}
+              description={<PostCardContent postData={post.content} />}
+            />
+          </>
         )}
       </Card>
       {commentFormOpened && (

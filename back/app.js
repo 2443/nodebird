@@ -39,7 +39,7 @@ if ((process.env.NODE_ENV = 'production')) {
 app.use(morgan('dev'));
 app.use(
   cors({
-    origin: ['http://localhost:3000', 'jimmy.'],
+    origin: ['http://localhost:3000', 'jimmy.kr'],
     credentials: true,
   })
 );

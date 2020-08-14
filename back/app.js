@@ -27,10 +27,18 @@ db.sequelize
 
 passportConfig();
 
+if ((process.env.NODE_ENV = 'production')) {
+  app.use(morgan('combined'));
+  app.use(hpp());
+  app.use(helmet());
+} else {
+  app.use(morgan('dev'));
+}
+
 app.use(morgan('dev'));
 app.use(
   cors({
-    origin: 'http://localhost:3000',
+    origin: ['http://localhost:3000', 'jimmy.'],
     credentials: true,
   })
 );

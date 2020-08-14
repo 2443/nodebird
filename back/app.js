@@ -16,6 +16,7 @@ const postsRouter = require('./routes/posts');
 const userRouter = require('./routes/user');
 const hashtagRouter = require('./routes/hashtag');
 
+const port = process.env.NODE_ENV === 'production' ? 80 : 3065;
 dotenv.config();
 
 db.sequelize
@@ -61,6 +62,6 @@ app.use('/user', userRouter);
 app.use('/posts', postsRouter);
 app.use('/hashtag', hashtagRouter);
 
-app.listen(3065, () => {
+app.listen(port, () => {
   console.log('서버 실행 중');
 });

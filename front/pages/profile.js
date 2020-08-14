@@ -8,6 +8,7 @@ import Axios from 'axios';
 import AppLayout from '../components/AppLayout';
 import FollowList from '../components/FollowList';
 import NicknameEditForm from '../components/NicknameEditForm';
+import { backUrl } from '../config/config';
 
 const fetcher = (url) => Axios.get(url, { withCredentials: true }).then((result) => result.data);
 
@@ -18,11 +19,11 @@ const Profile = () => {
   const { me } = useSelector((state) => state.user);
 
   const { data: followersData, error: followerError } = useSWR(
-    `http://localhost:3065/user/followers?limit=${followersLimit}`,
+    `${backUrl}/user/followers?limit=${followersLimit}`,
     fetcher
   );
   const { data: followingsData, error: followingError } = useSWR(
-    `http://localhost:3065/user/followings?limit=${followingsLimit}`,
+    `${backUrl}/user/followings?limit=${followingsLimit}`,
     fetcher
   );
 

@@ -125,7 +125,7 @@ function PostCard({ post }) {
           </Card>
         ) : (
           <>
-            <div styld={{ float: 'right' }}>{moment(post.createdAt).format('MMMM.YY.DD')}</div>
+            <div style={{ float: 'right' }}>{moment(post.createdAt).format('MMMM.YY.DD')}</div>
             <Card.Meta
               avatar={
                 <Link href={`/user/${post.User.id}`}>

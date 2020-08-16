@@ -3,8 +3,8 @@ back/node_modules
 front/node_modules
 
 front/.next
-front/react-nodebird.pema
+front/react-nodebird.pem
 
 back/.env
 back/uploads
-back/react-nodebird.pema
+back/react-nodebird.pem

@@ -1,9 +1,8 @@
 import React, { useRef, useCallback, useEffect } from 'react';
 import { Form, Input, Button } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
-import { addPost, UPLOAD_IMAGES_REQUEST, REMOVE_IMAGE, ADD_POST_REQUEST } from '../reducers/post';
+import { UPLOAD_IMAGES_REQUEST, REMOVE_IMAGE, ADD_POST_REQUEST } from '../reducers/post';
 import useInput from '../hooks/useInput';
-import { backUrl } from '../config/config';
 
 function PostForm() {
   const { imagePaths, addPostLoading, addPostDone } = useSelector((state) => state.post);
@@ -81,7 +80,7 @@ function PostForm() {
       <div>
         {imagePaths.map((v, i) => (
           <div key={v} style={{ display: 'inline-box' }}>
-            <img src={`${backUrl}/${v}`} style={{ width: '200px' }} alt={v} />
+            <img src={v} style={{ width: '200px' }} alt={v} />
             <div>
               <Button onClick={onRemove(i)}>제거</Button>
             </div>

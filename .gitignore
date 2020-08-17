@@ -1,10 +1,7 @@
 node_modules
-back/node_modules
-front/node_modules
+react-nodebird.pem
 
 front/.next
-front/react-nodebird.pem
 
 back/.env
 back/uploads
-back/react-nodebird.pem
